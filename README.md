@@ -1,39 +1,3 @@
-        const scheduleContainer = document.getElementById('scheduleContainer');
-        const userIdDisplay = document.getElementById('userIdDisplay');
-        const messageBox = document.getElementById('messageBox');
-        const messageText = document.getElementById('messageText');
-        const messageCloseBtn = document.getElementById('messageCloseBtn');
-
-        // Function to show a custom message box instead of alert()
-        const showMessage = (text) => {
-            messageText.textContent = text;
-            messageBox.classList.remove('hidden');
-        };
-
-        messageCloseBtn.addEventListener('click', () => {
-            messageBox.classList.add('hidden');
-        });
-
-        // Add a subject to the schedule
-        const addSubject = async () => {
-            const subjectName = subjectInput.value.trim();
-            const examDate = examDateInput.value;
-
-            if (subjectName && examDate) {
-                try {
-                    // Get current data from Firestore
-                    const docSnap = await getDoc(userSchedulesDocRef);
-                    const currentData = docSnap.exists() ? docSnap.data() : { subjects: [] };
-
-                    const newSubject = {
-                        name: subjectName,
-                        examDate: examDate,
-                        tasks: []
-                    };
-                    currentData.subjects.push(newSubject);
-
-                    // Save the updated data back to Firestore
-                    await setDoc(userSchedulesDocRef, currentData);
                     subjectInput.value = '';
                     examDateInput.value = '';
                 } catch (e) {
